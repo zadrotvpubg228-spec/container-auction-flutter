@@ -16,8 +16,17 @@ jobs:
           flutter-version: '3.29.0'
           channel: 'stable'
 
-      - name: Get dependencies & build APK
+      - name: Generate Android project & build APK
         run: |
+          mkdir -p /tmp/app_backup
+          cp pubspec.yaml /tmp/app_backup/pubspec.yaml
+          cp lib/main.dart /tmp/app_backup/main.dart
+
+          flutter create --project-name container_auction_flutter --org com.example.containerauction .
+
+          cp /tmp/app_backup/pubspec.yaml pubspec.yaml
+          cp /tmp/app_backup/main.dart lib/main.dart
+
           flutter pub get
           flutter build apk --debug
 
